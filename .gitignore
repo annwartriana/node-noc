@@ -3,3 +3,6 @@ dist/
 .DS_Strore
 logs/
 .env
+
+mongo/
+postgres/

@@ -1,6 +1,6 @@
 import { PrismaClient } from "@prisma/client";
 import { envs } from "./config/plugins/envs.plugin";
-import { MongoDataBase } from "./database/mongo";
+import { MongoDataBase } from "./database/mongodb";
 import { Server } from "./presentation/server";
 
 
@@ -9,18 +9,13 @@ import { Server } from "./presentation/server";
 })();
 
 async function main(){
-    // await MongoDataBase.connect({
-    //     mongoUrl: envs.MONGO_URL,
-    //     dbName: envs.MONGO_DB_NAME,  
-    // })
+    await MongoDataBase.connect({
+        mongoUrl: envs.MONGO_URL,
+        dbName: envs.MONGO_DB_NAME,  
+    })
 
+    // Ejemplo creacion de un log Prisma Postgres
     // const prisma = new PrismaClient();
-    // const logs = await prisma.logModel.findMany({
-    //     where:{
-    //         level:'MEDIUM'
-    //     }
-    // });
-    // console.log(logs);
     // const newLog = await prisma.logModel.create({
     //     data:{
     //         level: 'HIGH',
@@ -28,5 +23,17 @@ async function main(){
     //         origin: 'App.ts'
     //     }
     // });
+    // console.log({newLog})
+
+    // Ejemplo consulta de un log Prisma Postgres
+//     const prisma = new PrismaClient();
+//     const logs = await prisma.logModel.findMany({
+//         where:{
+//             level: 'LOW'
+//         }
+//     });
+//    console.log(logs);
+
+
     Server.start();  
 }

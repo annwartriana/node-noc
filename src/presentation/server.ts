@@ -9,11 +9,11 @@ import { LogRepositoryImpl } from "../infrastructure/repositories/log.repository
 import { CronService } from "./cron/cron-service";
 import { EmailService } from "./email/email.service";
 
-// const logRepository = new LogRepositoryImpl(
-//   // new FileSystemDatasource()
-//   // new MongoLogDataSource()
-//   new PostgresLogDataSource()
-// );
+const logRepository = new LogRepositoryImpl(
+// new FileSystemDatasource()
+new MongoLogDataSource()
+  // new PostgresLogDataSource()
+);
 
 const fsLogRepository = new LogRepositoryImpl(
   new FileSystemDatasource(),
@@ -41,6 +41,15 @@ export class Server {
         '*/5 * * * * *',
         () => {
           const url = 'https://google.com';
+
+          //Servicio único
+          // new CheckService(
+          //   logRepository,
+          //   () => console.log( `${ url } is ok` ),
+          //   ( error ) => console.log( error ),
+          // ).execute( url );
+
+           //Multiples servicios
           new CheckServiceMultiple(
             [ fsLogRepository, postgresLogRepository, mongoLogRepository ],
             () => console.log( `${ url } is ok` ),
